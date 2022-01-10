@@ -32,80 +32,6 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            show_all_articles();
-        });
-
-        function show_all_articles() {
-            $.ajax({
-                type: "GET",
-                url: "/api/home/articles",
-                data: {},
-                success: function (response) {
-                    let articles = response["all_articles"]
-                    for (i = 0; i < articles.length; i++) {
-                        let article_id = articles[i]['_id']
-                        let writer_id = articles[i]['writer_id']
-                        let writer_name = articles[i]['writer_name']
-                        let title = articles[i]['album_title']
-                        let singer = articles[i]['album_singer']
-                        let image = articles[i]['album_image']
-                        let like = articles[i]['like']
-                        let date = articles[i]['post_date']
-                        let desc = articles[i]['article_description']
-
-                        let temp_html = `<div class="card" style="width: 18rem;">
-                                            <img class="card-img-top"
-                                                 src="${image}"
-                                                 alt="Card image cap">
-                                            <div class="card-body">
-                                                <span class="title">${title}</span>
-
-                                                <span class="singer">${singer}</span>
-                                                <div class="writer-box">
-                                                    <img class="writer-img"
-                                                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                                                    <span class="writer-name">${writer_name}</span>
-                                                </div>
-                                                <div class="description">${desc}</div>
-                                                <div class="date">${date}</div>
-                                                <span class="article_id__invisible">${article_id}</span>
-                                                <div class="comments-wrap">
-                                                    <p>댓글</p>
-                                                    <div class="comment-box comment-box1">
-                                                        <img class="commenter-img"
-                                                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                                                        <span class="writer-name">댓글1준비중</span>
-                                                    </div>
-
-                                                    <div class="comment-box comment-box2">
-                                                        <img class="commenter-img"
-                                                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                                                        <span class="writer-name">댓글2준비중</span>
-                                                    </div>
-                                                </div>
-                                                <div class="buttons-box">
-                                                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
-                                                        <i class="fas fa-heart"></i>
-                                                        <span class="like-counts">${like}</span>
-                                                    </a>
-
-                                                    <a href=# onclick="" class="card-footer-item has-text-info">
-                                                        <i class="fas fa-search-plus"></i>
-                                                        <span class="like-counts">자세히보기</span>
-                                                    </a>
-                                                </div>
-
-
-                                            </div>
-                                        </div>`
-
-                        $('#cards-box').append(temp_html)
-                    }
-
-                }
-            })
-        }
 
         function keyword_search() {
 
@@ -117,25 +43,25 @@
                 console.log(keyword)
                 $('#cards-box').empty()
                 $.ajax({
-                type: "GET",
-                url: "api/home/search_article",
-                data: {'keyword':keyword},
-                success: function (response) {
-                    let articles = response["found_articles"]
+                    type: "GET",
+                    url: "api/home/search_article",
+                    data: {'keyword': keyword},
+                    success: function (response) {
+                        let articles = response["found_articles"]
 
-                    for (i=0; i<articles.length; i++) {
-                        console.log(articles[i]['album_title'])
-                        let article_id = articles[i]['_id']
-                        let writer_id = articles[i]['writer_id']
-                        let writer_name = articles[i]['writer_name']
-                        let title = articles[i]['album_title']
-                        let singer = articles[i]['album_singer']
-                        let image = articles[i]['album_image']
-                        let like = articles[i]['like']
-                        let date = articles[i]['post_date']
-                        let desc = articles[i]['article_description']
+                        for (i = 0; i < articles.length; i++) {
+                            console.log(articles[i]['album_title'])
+                            let article_id = articles[i]['_id']
+                            let writer_id = articles[i]['writer_id']
+                            let writer_name = articles[i]['writer_name']
+                            let title = articles[i]['album_title']
+                            let singer = articles[i]['album_singer']
+                            let image = articles[i]['album_image']
+                            let like = articles[i]['like']
+                            let date = articles[i]['post_date']
+                            let desc = articles[i]['article_description']
 
-                        let temp_html = `<div class="card" style="width: 18rem;">
+                            let temp_html = `<div class="card" style="width: 18rem;">
                                             <img class="card-img-top"
                                                  src="${image}"
                                                  alt="Card image cap">
@@ -181,10 +107,10 @@
                                             </div>
                                         </div>`
 
-                        $('#cards-box').append(temp_html)
+                            $('#cards-box').append(temp_html)
+                        }
                     }
-                }
-            })
+                })
             }
 
 
@@ -220,8 +146,55 @@
 
 
     <div class="card-box" id="cards-box">
-        <!-- 이하 44라인정도 하나의 카드-->
+        {% for result in results %}
 
+        <!-- 이하 44라인정도 하나의 카드-->
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top"
+                 src="{{ result['album_image'] }}"
+                 alt="Card image cap">
+            <div class="card-body">
+                <span class="title">{{result['album_title']}}</span>
+
+                <span class="singer">{{result['album_singer']}}</span>
+                <div class="writer-box">
+                    <img class="writer-img"
+                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                    <span class="writer-name">{{result['writer_name']}}</span>
+                </div>
+                <div class="description">{{ result['article_description'] }}</div>
+                <div class="date">{{result['post_date']}}</div>
+                <span class="article_id__invisible">{{result['_id']}}</span>
+                <div class="comments-wrap">
+                    <p>댓글</p>
+                    <div class="comment-box comment-box1">
+                        <img class="commenter-img"
+                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                        <span class="writer-name">댓글1준비중</span>
+                    </div>
+
+                    <div class="comment-box comment-box2">
+                        <img class="commenter-img"
+                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                        <span class="writer-name">댓글2준비중</span>
+                    </div>
+                </div>
+                <div class="buttons-box">
+                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
+                        <i class="fas fa-heart"></i>
+                        <span class="like-counts">{{result['like']}}</span>
+                    </a>
+
+                    <a href=# onclick="" class="card-footer-item has-text-info">
+                        <i class="fas fa-search-plus"></i>
+                        <span class="like-counts">자세히보기</span>
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+        {% endfor %}
 
     </div>
 

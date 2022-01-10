@@ -1,7 +1,14 @@
+import pymongo
 from flask import Flask, render_template,  request, redirect
 app = Flask(__name__)
 
 from pymongo import MongoClient
+
+#TODO EC2랑 연결된 mongoDb로 변경
+client = MongoClient('localhost', 27017)
+# client = MongoClient('mongodb://test:test@localhost', 27017)
+
+db = client.mini
 
 # 다른 API 경로들 파일 연결
 from routes import home_route
@@ -15,7 +22,8 @@ if app.config['DEBUG']:
 # 홈 화면 주기
 @app.route('/')
 def home():
-    return render_template('index.html')
+    all_articles = list(db.articles.find({}, {}).sort('like', pymongo.DESCENDING))
+    return render_template('index.html', results=all_articles)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5050, debug=True)
+    app.run(host="0.0.0.0", port=5003, debug=True)
