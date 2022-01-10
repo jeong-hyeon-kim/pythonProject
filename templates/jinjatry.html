@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans+KR:wght@300&display=swap"
+          rel="stylesheet">
+
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            show_all_articles();
+        });
+
+        function show_all_articles() {
+            $.ajax({
+                type: "GET",
+                url: "/api/home/articles",
+                data: {},
+                success: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+
+        function keyword_search() {
+
+            let keyword = $('#input_search').val()
+            // alert(keyword)
+            // let keyword = $('#input_search').value;
+            //
+            if (keyword) {
+                console.log(keyword)
+                $('#cards-box').empty()
+                $.ajax({
+                    type: "GET",
+                    url: "api/home/search_article",
+                    data: {'keyword': keyword},
+                    success: function (response) {
+                        console.log(response)
+
+                    }
+                })
+            }
+
+
+        }
+
+    </script>
+
+</head>
+<body>
+
+
+<header id="header">
+    <div class="header">
+
+        <div class="header_menu">
+            <a href="#" class="myPgBtn">My Page</a>
+            <a href="#" class="loginBtn">Login</a>
+        </div>
+
+    </div>
+</header>
+
+
+<div class="wrap">
+
+    <div class="logo">
+        InAirpod
+    </div>
+
+    <div class="wrap-box_search">
+        <input type="text" id="input_search" class="input_search" placeholder="{{ results }}">
+        <button type="button" class="btn btn-search" onclick="keyword_search()">검색</button>
+    </div>
+
+
+    <ul class="card-box" id="cards-box">
+
+        {% for result in results %}
+        <li>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top"
+                     src="{{ result['album_image'] }}"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <span class="title">{{result['album_title']}}</span>
+
+                    <span class="singer">{{result['album_singer']}}</span>
+                    <div class="writer-box">
+                        <img class="writer-img"
+                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                        <span class="writer-name">{{result['writer_name']}}</span>
+                    </div>
+                    <div class="description">{{ result['article_description'] }}</div>
+                    <div class="date">{{result['post_date']}}</div>
+                    <span class="article_id__invisible">{{result['_id']}}</span>
+                    <div class="comments-wrap">
+                        <p>댓글</p>
+                        <div class="comment-box comment-box1">
+                            <img class="commenter-img"
+                                 src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                            <span class="writer-name">댓글1준비중</span>
+                        </div>
+
+                        <div class="comment-box comment-box2">
+                            <img class="commenter-img"
+                                 src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                            <span class="writer-name">댓글2준비중</span>
+                        </div>
+                    </div>
+                    <div class="buttons-box">
+                        <a href=# onclick="" class="card-footer-item has-text-info like-btn">
+                            <i class="fas fa-heart"></i>
+                            <span class="like-counts">{{result['like']}}</span>
+                        </a>
+
+                        <a href=# onclick="" class="card-footer-item has-text-info">
+                            <i class="fas fa-search-plus"></i>
+                            <span class="like-counts">자세히보기</span>
+                        </a>
+                    </div>
+
+
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+
+</body>
+</html>
