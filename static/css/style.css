@@ -1,5 +1,5 @@
 * {
-    font-family: 'Gowun Dodum', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 a {
@@ -42,11 +42,20 @@ a {
     margin: auto;
 }
 
+.wrap .logo {
+    font-size: 40px;
+    font-family: 'Lobster', cursive;
+    width: 200px;
+    margin: auto;
+    color: #4925ca;
+    margin-top: 40px;
+}
+
 /* 검색 창 라인*/
 .input_search {
     width: 650px;
-    margin-left: 80px;
-    margin-top: 40px;
+    margin-left: 95px;
+    margin-top: 20px;
     margin-bottom: 50px;
     border-width: thick;
     border-collapse: collapse;
