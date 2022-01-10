@@ -9,21 +9,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <meta property="og:title" content="Jeo's Page"/>
-    <meta property="og:description" content="곧 있으면 항해 99"/>
-    <meta property="og:image" content="{{ url_for('static', filename='ogimage.jpeg') }}"/>
-
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
     <!-- font -->
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Noto+Sans+KR:wght@300&display=swap"
+          rel="stylesheet">
 
 
     <!-- App CSS -->
@@ -36,6 +31,166 @@
             crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            show_all_articles();
+        });
+
+        function show_all_articles() {
+            $.ajax({
+                type: "GET",
+                url: "/api/home/articles",
+                data: {},
+                success: function (response) {
+                    let articles = response["all_articles"]
+                    for (i = 0; i < articles.length; i++) {
+                        let article_id = articles[i]['_id']
+                        let writer_id = articles[i]['writer_id']
+                        let writer_name = articles[i]['writer_name']
+                        let title = articles[i]['album_title']
+                        let singer = articles[i]['album_singer']
+                        let image = articles[i]['album_image']
+                        let like = articles[i]['like']
+                        let date = articles[i]['post_date']
+                        let desc = articles[i]['article_description']
+
+                        let temp_html = `<div class="card" style="width: 18rem;">
+                                            <img class="card-img-top"
+                                                 src="${image}"
+                                                 alt="Card image cap">
+                                            <div class="card-body">
+                                                <span class="title">${title}</span>
+
+                                                <span class="singer">${singer}</span>
+                                                <div class="writer-box">
+                                                    <img class="writer-img"
+                                                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                    <span class="writer-name">${writer_name}</span>
+                                                </div>
+                                                <div class="description">${desc}</div>
+                                                <div class="date">${date}</div>
+                                                <span class="article_id__invisible">${article_id}</span>
+                                                <div class="comments-wrap">
+                                                    <p>댓글</p>
+                                                    <div class="comment-box comment-box1">
+                                                        <img class="commenter-img"
+                                                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                        <span class="writer-name">댓글1준비중</span>
+                                                    </div>
+
+                                                    <div class="comment-box comment-box2">
+                                                        <img class="commenter-img"
+                                                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                        <span class="writer-name">댓글2준비중</span>
+                                                    </div>
+                                                </div>
+                                                <div class="buttons-box">
+                                                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
+                                                        <i class="fas fa-heart"></i>
+                                                        <span class="like-counts">${like}</span>
+                                                    </a>
+
+                                                    <a href=# onclick="" class="card-footer-item has-text-info">
+                                                        <i class="fas fa-search-plus"></i>
+                                                        <span class="like-counts">자세히보기</span>
+                                                    </a>
+                                                </div>
+
+
+                                            </div>
+                                        </div>`
+
+                        $('#cards-box').append(temp_html)
+                    }
+
+                }
+            })
+        }
+
+        function keyword_search() {
+
+            let keyword = $('#input_search').val()
+            // alert(keyword)
+            // let keyword = $('#input_search').value;
+            //
+            if (keyword) {
+                console.log(keyword)
+                $('#cards-box').empty()
+                $.ajax({
+                type: "GET",
+                url: "api/home/search_article",
+                data: {'keyword':keyword},
+                success: function (response) {
+                    let articles = response["found_articles"]
+
+                    for (i=0; i<articles.length; i++) {
+                        console.log(articles[i]['album_title'])
+                        let article_id = articles[i]['_id']
+                        let writer_id = articles[i]['writer_id']
+                        let writer_name = articles[i]['writer_name']
+                        let title = articles[i]['album_title']
+                        let singer = articles[i]['album_singer']
+                        let image = articles[i]['album_image']
+                        let like = articles[i]['like']
+                        let date = articles[i]['post_date']
+                        let desc = articles[i]['article_description']
+
+                        let temp_html = `<div class="card" style="width: 18rem;">
+                                            <img class="card-img-top"
+                                                 src="${image}"
+                                                 alt="Card image cap">
+                                            <div class="card-body">
+                                                <span class="title">${title}</span>
+
+                                                <span class="singer">${singer}</span>
+                                                <div class="writer-box">
+                                                    <img class="writer-img"
+                                                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                    <span class="writer-name">${writer_name}</span>
+                                                </div>
+                                                <div class="description">${desc}</div>
+                                                <div class="date">${date}</div>
+                                                <span class="article_id__invisible">${article_id}</span>
+                                                <div class="comments-wrap">
+                                                    <p>댓글</p>
+                                                    <div class="comment-box comment-box1">
+                                                        <img class="commenter-img"
+                                                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                        <span class="writer-name">댓글1준비중</span>
+                                                    </div>
+
+                                                    <div class="comment-box comment-box2">
+                                                        <img class="commenter-img"
+                                                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                        <span class="writer-name">댓글2준비중</span>
+                                                    </div>
+                                                </div>
+                                                <div class="buttons-box">
+                                                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
+                                                        <i class="fas fa-heart"></i>
+                                                        <span class="like-counts">${like}</span>
+                                                    </a>
+
+                                                    <a href=# onclick="" class="card-footer-item has-text-info">
+                                                        <i class="fas fa-search-plus"></i>
+                                                        <span class="like-counts">자세히보기</span>
+                                                    </a>
+                                                </div>
+
+
+                                            </div>
+                                        </div>`
+
+                        $('#cards-box').append(temp_html)
+                    }
+                }
+            })
+            }
+
+
+        }
+
+    </script>
 
 </head>
 <body>
@@ -59,150 +214,14 @@
     </div>
 
     <div class="wrap-box_search">
-        <input type="text" class="input_search" placeholder="검색어를 입력해주세요">
-        <button type="button" class="btn btn-search">검색</button>
+        <input type="text" id="input_search" class="input_search" placeholder="검색어를 입력해주세요">
+        <button type="button" class="btn btn-search" onclick="keyword_search()">검색</button>
     </div>
 
 
-    <div class="card-box">
-<!-- 이하 44라인정도 하나의 카드-->
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top"
-                 src="https://musicmeta-phinf.pstatic.net/album/000/407/407181.jpg?type=r480Fll&v=20131210120311"
-                 alt="Card image cap">
-            <div class="card-body">
-                <span class="title">하품만 나오네</span>
+    <div class="card-box" id="cards-box">
+        <!-- 이하 44라인정도 하나의 카드-->
 
-                <span class="singer">이승윤</span>
-                <div class="writer-box">
-                    <img class="writer-img"
-                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                    <span class="writer-name">겨울의 스누피</span>
-                </div>
-                <div class="description">너무 좋아하는 노래에요!!!</div>
-                <div class="date">2021년 1월 10일</div>
-
-                <div class="comments-wrap">
-                    <p>댓글</p>
-                    <div class="comment-box comment-box1">
-                        <img class="commenter-img"
-                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">최고에요~</span>
-                    </div>
-
-                    <div class="comment-box comment-box2">
-                        <img class="commenter-img"
-                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">최고에요~</span>
-                    </div>
-                </div>
-                <div class="buttons-box">
-                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
-                        <i class="fas fa-heart"></i>
-                        <span class="like-counts">좋아요 수</span>
-                    </a>
-
-                    <a href=# onclick="" class="card-footer-item has-text-info">
-                        <i class="fas fa-search-plus"></i>
-                        <span class="like-counts">자세히보기</span>
-                    </a>
-                </div>
-
-
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top"
-                 src="https://musicmeta-phinf.pstatic.net/album/000/407/407181.jpg?type=r480Fll&v=20131210120311"
-                 alt="Card image cap">
-            <div class="card-body">
-                <span class="title">하품만 나오네</span>
-
-                <span class="singer">이승윤</span>
-                <div class="writer-box">
-                    <img class="writer-img"
-                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                    <span class="writer-name">겨울의 스누피</span>
-                </div>
-                <div class="description">너무 좋아하는 노래에요!!!</div>
-                <div class="date">2021년 1월 10일</div>
-
-                <div class="comments-wrap">
-                    <p>댓글</p>
-                    <div class="comment-box comment-box1">
-                        <img class="commenter-img"
-                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">최고에요~</span>
-                    </div>
-
-                    <div class="comment-box comment-box2">
-                        <img class="commenter-img"
-                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">최고에요~</span>
-                    </div>
-                </div>
-                <div class="buttons-box">
-                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
-                        <i class="fas fa-heart"></i>
-                        <span class="like-counts">좋아요 수</span>
-                    </a>
-
-                    <a href=# onclick="" class="card-footer-item has-text-info">
-                        <i class="fas fa-search-plus"></i>
-                        <span class="like-counts">자세히보기</span>
-                    </a>
-                </div>
-
-
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top"
-                 src="https://musicmeta-phinf.pstatic.net/album/000/407/407181.jpg?type=r480Fll&v=20131210120311"
-                 alt="Card image cap">
-            <div class="card-body">
-                <span class="title">하품만 나오네</span>
-
-                <span class="singer">이승윤</span>
-                <div class="writer-box">
-                    <img class="writer-img"
-                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                    <span class="writer-name">겨울의 스누피</span>
-                </div>
-                <div class="description">너무 좋아하는 노래에요!!!</div>
-                <div class="date">2021년 1월 10일</div>
-
-                <div class="comments-wrap">
-                    <p>댓글</p>
-                    <div class="comment-box comment-box1">
-                        <img class="commenter-img"
-                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">최고에요~</span>
-                    </div>
-
-                    <div class="comment-box comment-box2">
-                        <img class="commenter-img"
-                             src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">최고에요~</span>
-                    </div>
-                </div>
-                <div class="buttons-box">
-                    <a href=# onclick="" class="card-footer-item has-text-info like-btn">
-                        <i class="fas fa-heart"></i>
-                        <span class="like-counts">좋아요 수</span>
-                    </a>
-
-                    <a href=# onclick="" class="card-footer-item has-text-info">
-                        <i class="fas fa-search-plus"></i>
-                        <span class="like-counts">자세히보기</span>
-                    </a>
-                </div>
-
-
-            </div>
-        </div>
 
     </div>
 

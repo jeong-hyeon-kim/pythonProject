@@ -73,6 +73,10 @@ a {
     margin-left: 10px;
 }
 
+.btn-search:hover {
+    background-color: #7b76d7;
+}
+
 /* 카드박스*/
 .card-box {
     width: 1000px;
@@ -135,6 +139,10 @@ a {
     font-size: 13px;
     margin-top: 5px;
     margin-right: 5px;
+}
+
+.article_id__invisible {
+    visibility: hidden;
 }
 
 .card .comment-box {
