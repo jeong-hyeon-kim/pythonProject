@@ -21,3 +21,14 @@ def keyword_search():
     # return render_template('templates/index.html', results = found_articles)
 
 # 좋아요
+@bp.route('/like', methods=['POST'])
+def like():
+    # like_num = request.form['like']
+    article_id = request.form['article_id']
+    print(article_id)
+
+    target_like = db.articles.find_one({'_id':article_id}, {})['like']
+    print(target_like)
+    target_like += 1
+    db.articles.update_one({'_id':article_id}, {'$set': {'like': target_like}})
+    return jsonify({'message': '좋아요 완료!'})

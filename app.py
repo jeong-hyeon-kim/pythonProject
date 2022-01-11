@@ -23,6 +23,13 @@ if app.config['DEBUG']:
 @app.route('/')
 def home():
     all_articles = list(db.articles.find({}, {}).sort('like', pymongo.DESCENDING))
+    id_list=[]
+
+    for article in all_articles:
+        id = article['_id']
+        id_list.append(id)
+
+
     return render_template('index.html', results=all_articles)
 
 if __name__ == '__main__':
