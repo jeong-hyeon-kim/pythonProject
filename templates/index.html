@@ -31,11 +31,15 @@
             crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+    <!--   JS 정현 -->
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $('.window').hide();
-            $('.background').hide();
+            // 단일게시글 팝업창 닫아놓기
+            close_popup()
+            // 포스팅 팝업창 닫아놓기
+            close_posting_popup()
+
         });
 
         function like(article_id) {
@@ -147,6 +151,8 @@
 
         }
 
+
+        // 단일아티클 및 댓글작성 팝업창 닫기/열기
         function close_popup() {
             $('.window').hide()
             $('.background').hide()
@@ -158,15 +164,46 @@
             $('.background').show()
         }
 
+        // 포스팅 팝업창 닫기/열기
         function close_posting_popup() {
-             $('.modal-window').hide();
+            $('.modal-window').hide();
             $('.modal-overlay').hide();
         }
 
         function show_posting_popup() {
-             $('.modal-window').show();
+            $('.modal-window').show();
             $('.modal-overlay').show();
         }
+
+        //후기를 작성하면 서버로 내용을 보내서 저장하는 함수
+        function comment() {
+            console.log("여기까지는 나오는가")
+            let comment = document.getElementById('comment').value;
+            // let userID = document.getElementById('userID').value;
+            let today = new Date().toISOString();
+            // 이름을 어떻게 가져올것인가?
+            // let name =
+            console.log(comment);
+            console.log(today);
+
+            $.ajax({
+                type: "POST",
+                url: "/api/single/post_comment",
+                data: {
+                    comment_give: comment,
+                    date_give: today
+                    // userID_give: userID
+                },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert(response["msg"]);
+                        $("#comment-box").removeClass("is-active");
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
 
     </script>
 
@@ -181,6 +218,7 @@
         // })
 
         function previewArticle() {
+            // alert("프리뷰클릭")
             let url = $('#url').val()
 
             console.log(url)
@@ -243,6 +281,7 @@
         <button type="button" class="btn btn-search" onclick="keyword_search()">검색</button>
     </div>
 
+    <!--  메인에서 카드박스  -->
     <div class="card-box" id="cards-box">
         {% for result in results %}
         <!-- 이하 44라인정도 하나의 카드-->
