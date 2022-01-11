@@ -22,11 +22,22 @@ def keyword_search():
     for article in found_articles:
         id = article['_id']
 
+        # 글쓴이의 이미지를 userDb에서 가져오기
+        writer_id = article['writer_id']
+        writer_img = db.users.find_one({'user_id': writer_id}, {})['user_img']
+        article['writer_img'] = writer_img
+
         comments = list(db.comments.find({'article_id': id}, {}).sort('post_date', pymongo.DESCENDING))
         if len(comments) != 0:
             comment1 = comments[0]['contents']
+            commenter1_id = comments[0]['commenter_id']
+            commenter1_img = db.users.find_one({'user_id': commenter1_id}, {})['user_img']
+            article['commenter1_img'] = commenter1_img
             if len(comments) >= 2:
                 comment2 = comments[1]['contents']
+                commenter2_id = comments[1]['commenter_id']
+                commenter2_img = db.users.find_one({'user_id': commenter2_id}, {})['user_img']
+                article['commenter2_img'] = commenter2_img
             else:
                 comment2 = ""
         else:
