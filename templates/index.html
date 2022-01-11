@@ -121,7 +121,7 @@
                                                         <span class="like-counts">${like}</span>
                                                     </a>
 
-                                                    <a href=# onclick="" class="card-footer-item has-text-info">
+                                                    <a href=# onclick="" class="card-footer-item has-text-info show">
                                                         <i class="fas fa-search-plus"></i>
                                                         <span class="like-counts">자세히보기</span>
                                                     </a>
@@ -140,6 +140,17 @@
             }
 
 
+        }
+
+        function close_popup() {
+            $('.window').hide()
+            $('.background').hide()
+
+        }
+
+        function show_popup() {
+            $('.window').show()
+            $('.background').show()
         }
 
     </script>
@@ -224,7 +235,7 @@
                         <span class="like-counts">{{result['like']}}</span>
                     </a>
 
-                    <a href="#" onclick="" class="card-footer-item has-text-info">
+                    <a href="#" onclick="show_popup()" class="card-footer-item has-text-info show">
                         <i class="fas fa-search-plus"></i>
                         <span class="like-counts">자세히보기</span>
                     </a>
@@ -237,9 +248,82 @@
 
     </div>
 
+    <div id="background" class="background">
+        <div class="window">
+            <!--            <div class="wrap">-->
+            <button type="button" class="close" aria-label="Close" id="close" onclick="close_popup()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="album-wrap" style="padding-bottom: 10px">
+                <div class="album-img">
+                    <div class="media">
+                        <img class="mr-3" src="/static/post.png" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <h5 class="mt-0" style="padding-top: 10px">앨범 제목</h5>
+                            <h6 class="mt-0">가수</h6>
+                            노래 제목
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card body. 코멘트 들어간다!!
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body1">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="댓글 입력!"
+                               aria-label="Recipient's username" aria-describedby="button-addon2" id="comment">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+                                    onclick="comment()">
+                                입력
+                            </button>
+                        </div>
+                    </div>
+                    <ul class="list-group">
+                        <li class="media">
+                            <img class="mr-31"
+                                 src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAzMDFfMTY4%2FMDAxNTgzMDYxMTI3Mzcw.dMYeeDAJq6MPBVzEEZkY5fgWsuUPAFdEfoufAmzz5NUg.3G-OzT-ecdZspnCMJVYAa2mnDcyj6-12W-EAefLw1rkg.JPEG.z___s2%2F20200229_225235.jpg&type=a340"
+                                 alt="이미지 안나오면 나옴">
+                            <div class="media-body1">
+                                <p><strong>아이디</strong><small><b></b>-<b></b></small><small>날짜</small></p>
+                                Donec sed odio dui. natoque penatibus et magnis dis parturient montes, nascetur
+                                ridiculus
+                                mus.
+                                <a href='javascript:void(0);' onclick="updateComment();"><span
+                                        class="badge badge-primary" style="vertical-align: text-after-edge" id="update">수정</span></a>
+                                <a href='javascript:void(0);' onclick="deleteComment();"><span
+                                        class="badge badge-danger" style="vertical-align: text-after-edge" id="delete">삭제</span></a>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <img class="mr-31"
+                                 src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAzMDFfMTY4%2FMDAxNTgzMDYxMTI3Mzcw.dMYeeDAJq6MPBVzEEZkY5fgWsuUPAFdEfoufAmzz5NUg.3G-OzT-ecdZspnCMJVYAa2mnDcyj6-12W-EAefLw1rkg.JPEG.z___s2%2F20200229_225235.jpg&type=a340"
+                                 alt="이미지 안나오면 나옴">
+                            <div class="media-body1">
+                                <p><strong>아이디</strong><small><b></b>-<b></b></small><small>날짜</small></p>
+                                Donec sed odio dui. natoque penatibus et magnis dis parturient montes, nascetur
+                                ridiculus
+                                mus.
+                                <span class="badge badge-primary" style="vertical-align: text-after-edge"
+                                      id="update1">수정</span>
+                                <span class="badge badge-danger" style="vertical-align: text-after-edge"
+                                      id="delete1">삭제</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--            </div>-->
+        </div>
+    </div>
 
 </div>
 
 
 </body>
+<script src="../static/main.js"></script>
 </html>
