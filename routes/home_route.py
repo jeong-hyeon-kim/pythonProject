@@ -16,12 +16,28 @@ bp = Blueprint(NAME, __name__, template_folder='templates', url_prefix="/api/hom
 def keyword_search():
     keyword = request.args.get('keyword')
     print(keyword)
+    modified_all_articles = []
+
     found_articles = list(db.articles.find({'$or': [{'album_singer':{'$regex': keyword}}, {'album_title':{'$regex': keyword}}]},{}))
     for article in found_articles:
-        print(article['_id'])
+        id = article['_id']
 
+        comments = list(db.comments.find({'article_id': id}, {}).sort('post_date', pymongo.DESCENDING))
+        if len(comments) != 0:
+            comment1 = comments[0]['contents']
+            if len(comments) >= 2:
+                comment2 = comments[1]['contents']
+            else:
+                comment2 = ""
+        else:
+            comment1 = ""
+            comment2 = ""
+
+        article['comment1'] = comment1
+        article['comment2'] = comment2
+        modified_all_articles.append(article)
     # comments = db.comments.find({'article_id':})
-    return jsonify({'found_articles': found_articles})
+    return jsonify({'found_articles': modified_all_articles})
     # return render_template('templates/index.html', results = found_articles)
 
 # 좋아요

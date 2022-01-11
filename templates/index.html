@@ -33,30 +33,6 @@
 
     <script type="text/javascript">
 
-        // $("a").click(function (event) {
-        //     alert("클릭")
-        //     eventElem = event.target;
-        //     console.log(eventElem);
-        //     testElem1 = eventElem.parentElement;
-        //     console.log(testElem1);
-        //     testElem2 = testElem1.previousElementSibling;
-        //     console.log(testElem2);
-        //     targetElem = testElem2.previousElementSibling;
-        //     id_of_article = targetElem.innerText;
-        //     console.log(id_of_article);
-        //
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/api/home/like",
-        //         data: {article_id: id_of_article},
-        //         success: function (response) {
-        //             alert(response["msg"]);
-        //             window.location.reload();
-        //         },
-        //     });
-        // });
-
-
         function like(article_id) {
             $.ajax({
                 type: 'POST',
@@ -93,6 +69,7 @@
                             console.log(articles[i]['album_title'])
                             let article_id = articles[i]['_id']
                             let writer_id = articles[i]['writer_id']
+                            let writer_img = articles[i]['writer_img']
                             let writer_name = articles[i]['writer_name']
                             let title = articles[i]['album_title']
                             let singer = articles[i]['album_singer']
@@ -113,7 +90,7 @@
                                                 <span class="singer">${singer}</span>
                                                 <div class="writer-box">
                                                     <img class="writer-img"
-                                                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvaWzlnavMUGbFc0HZxkotuYrQ8jgoIsg_IQ&usqp=CAU">
                                                     <span class="writer-name">${writer_name}</span>
                                                 </div>
                                                 <div class="description">${desc}</div>
@@ -203,7 +180,7 @@
                 <span class="singer">{{result['album_singer']}}</span>
                 <div class="writer-box">
                     <img class="writer-img"
-                         src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
+                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvaWzlnavMUGbFc0HZxkotuYrQ8jgoIsg_IQ&usqp=CAU">
                     <span class="writer-name">{{result['writer_name']}}</span>
                 </div>
                 <div class="description">{{ result['article_description'] }}</div>
