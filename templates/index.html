@@ -65,8 +65,10 @@
                     "article_id": article_id
                 },
                 success: function (response) {
-                    alert(response['message']);
-                    window.location.reload();
+                    // alert(response['message']);
+                    // window.location.reload();
+                    keyword_search();
+                    // $('.like-btn').load(location.href+' .like-btn');
                 }
             });
         }
@@ -130,7 +132,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="buttons-box">
-                                                    <a onclick="like('${article_id}')" style="cursor: pointer" class="card-footer-item has-text-info like-btn">
+                                                    <a href="#" onclick="like('${article_id}')" style="cursor: pointer" class="card-footer-item has-text-info like-btn">
                                                         <i class="fas fa-heart"></i>
                                                         <span class="like-counts">${like}</span>
                                                     </a>
@@ -149,6 +151,8 @@
                         }
                     }
                 })
+            } else {
+                window.location.reload();
             }
 
 
@@ -223,7 +227,7 @@
                         <span class="like-counts">{{result['like']}}</span>
                     </a>
 
-                    <a class="card-footer-item has-text-info">
+                    <a href="#" onclick="" class="card-footer-item has-text-info">
                         <i class="fas fa-search-plus"></i>
                         <span class="like-counts">자세히보기</span>
                     </a>
