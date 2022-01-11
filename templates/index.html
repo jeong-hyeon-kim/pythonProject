@@ -33,6 +33,11 @@
 
     <script type="text/javascript">
 
+        $(document).ready(function () {
+            $('.window').hide();
+            $('.background').hide();
+        });
+
         function like(article_id) {
             $.ajax({
                 type: 'POST',
@@ -153,6 +158,62 @@
             $('.background').show()
         }
 
+        function close_posting_popup() {
+             $('.modal-window').hide();
+            $('.modal-overlay').hide();
+        }
+
+        function show_posting_popup() {
+             $('.modal-window').show();
+            $('.modal-overlay').show();
+        }
+
+    </script>
+
+
+    <!--    한솔님 주신 javascript 코드 -->
+    <script>
+
+
+        // const closeBtn = modal.querySelector(".close-area")
+        // closeBtn.addEventListener("click", e => {
+        //     modal.style.display = "none"
+        // })
+
+        function previewArticle() {
+            let url = $('#url').val()
+
+            console.log(url)
+
+            $.ajax({
+                type: "POST",
+                url: "/api/post/preview",
+                data: {'url_give': url},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload()
+                }
+            })
+
+
+        }
+
+        function postArticle() {
+            let url = $('url').val()
+            let desc = $('description').val()
+
+            $.ajax({
+                type: "POST",
+                url: "/api/post",
+                data: {url_give: url, desc_give: desc},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload()
+                }
+            })
+        }
+
+
     </script>
 
 
@@ -181,7 +242,6 @@
         <input type="text" id="input_search" class="input_search" placeholder="검색어를 입력해주세요">
         <button type="button" class="btn btn-search" onclick="keyword_search()">검색</button>
     </div>
-
 
     <div class="card-box" id="cards-box">
         {% for result in results %}
@@ -248,6 +308,7 @@
 
     </div>
 
+    <!--   팝업(1) 단일글보기 / 광훈님-->
     <div id="background" class="background">
         <div class="window">
             <!--            <div class="wrap">-->
@@ -321,9 +382,39 @@
         </div>
     </div>
 
+    <!--   팝업(2) 글작성 / 한솔님-->
+    <div id="modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                <h2>게시글 작성</h2>
+            </div>
+            <div class="close-area"><a href="#" onclick="close_posting_popup()">X</a></div>
+
+            <div class="content">
+
+                <div class="form-group">
+                    <label for="url"></label>
+                    <input id="url" class="form-control" placeholder="URL"> <!-- url 받아서 이미지 추출 -->
+                </div>
+                <div>
+                    <button type="button" class="preview_btn" onclick="previewArticle()">preview</button>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="description"></label>
+                    <textarea id="description" class="form-control" rows="4" placeholder="comment"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="postArticle()">POST</button>
+            </div>
+
+        </div>
+    </div>
 </div>
 
+</div>
 
+<a id="post-button" href="#" onclick="show_posting_popup()">post</a>
 </body>
 <script src="../static/main.js"></script>
 </html>

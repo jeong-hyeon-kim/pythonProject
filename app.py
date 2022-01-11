@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 
 import pymongo
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
@@ -62,6 +62,67 @@ def home():
 
     return render_template('index.html', results=modified_all_articles)
 
+
+#  광훈님 api
+# 카드 클릭 시 단일 게시물 보여주기
+# 댓글작성 (POST) API
+@app.route('/api/single/post_comment', methods=['POST'])
+def post_comment():
+    comment_receive = request.form['comment_give']
+    today_receive = request.form['date_give']
+    userId_receive = request.form['userID_give']
+# 유저의 아이디와 이름을 어떻게 가져와야 할지 몰라서 doc에 유저이름이 없습니다! - 연습하고 있는거에는 id를 던지고 있는데 해당 프로젝트에서는 아직 안되서...
+    doc = {
+        'contents': comment_receive,
+        'post_date': today_receive,
+        'commenter_id': userId_receive
+    }
+    db.comments.insert_one(doc)
+
+    return jsonify({'result': 'success', 'msg': '저장 완료!'})
+
+
+# 카드 클릭 시 단일 게시물 보여주기
+
+# 댓글리스트로 보여주기
+@app.route('/memo', methods=['GET'])
+def listing():
+    comments = list(db.prac12.find({},{'_id':False}))
+    print(comments)
+    return jsonify({'all_comments':comments})
+
+
+# 유저체크하기
+@app.route('/api/single/check_user', methods=['GET'])
+def checkUser():
+
+    user = db.users.find_one({'name': 'bobby'})
+
+    title_receive = request.form['title_give']
+    db.prac12.update_one({'title': title_receive})
+
+    # db.users.update_one({'name': 'bobby'}, {'$set': {'age': 19}})
+
+    return jsonify({'msg': '수정완료!'})
+
+# 댓글수정
+@app.route('/api/single/update_comment', methods=['POST'])
+def update_comment():
+
+    title_receive = request.form['title_give']
+    db.prac12.update_one({'title': title_receive})
+
+    # db.users.update_one({'name': 'bobby'}, {'$set': {'age': 19}})
+
+    return jsonify({'msg': '수정완료!'})
+
+# 댓글삭제
+@app.route('/api/single/delete_comment', methods=['POST'])
+def delete_comment():
+    title_receive = request.form['title_give']
+    db.prac12.delete_one({'title': title_receive})
+
+    return jsonify({'msg': '삭제완료!'})
 
 
 if __name__ == '__main__':

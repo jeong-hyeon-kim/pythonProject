@@ -193,6 +193,24 @@ a {
     margin-left: 45px;
 }
 
+#post-button {
+  background-color: rgb(157, 159, 222);
+  width: 40px;
+  height: 40px;
+  text-align: center;
+
+  border-radius: 20px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  /*transition-property: background-color, opacity, visibility;*/
+  /*transition-duration: 0.3s, 0.5s, 0.5s;*/
+  /*opacity: 0;*/
+  /*visibility: hidden;*/
+  /*z-index: 999;*/
+}
+
+
 /* 광훈님 주신 css */
 .background {
     display: block;
@@ -222,7 +240,6 @@ a {
     padding: 10px;
     overflow: auto;
     display: block;
-
 }
 
 .album-img {
@@ -249,3 +266,87 @@ a {
 .media-body1 {
     padding: 0px 0px 0px 20px;
 }
+
+/* 한솔님 주신 css*/
+
+* {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        #modal.modal-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(153, 51, 204, 0.14);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(1.5px);
+            -webkit-backdrop-filter: blur(1.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        #modal .modal-window {
+
+            background: rgba(255, 255, 255, 2);
+            box-shadow: 0 8px 32px 0 rgba(51, 51, 51, 0.5);
+            backdrop-filter: blur(13.5px);
+            -webkit-backdrop-filter: blur(13.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
+            width: 700px;
+            height: 900px;
+            position: relative;
+            padding: 10px;
+        }
+
+        #modal .title {
+            padding-left: 10px;
+            letter-spacing: 2px;
+            word-spacing: 4px;
+            display: inline;
+            color: black;
+
+        }
+
+        #modal .title h2 {
+            display: inline;
+        }
+
+        #modal .close-area {
+            display: inline;
+            float: right;
+            padding-right: 10px;
+            cursor: pointer;
+            color: black;
+        }
+
+        #modal .content {
+            margin-top: 20px;
+            padding: 0px 10px;
+            color: black;
+        }
+
+        .btn-primary {
+            color: black;
+            margin: auto;
+            display: flex;
+        }
+
+        .preview_btn {
+            position: absolute;
+            margin-left: 84%;
+            background-color: transparent;
+            border: solid 1px;
+            font-size: 10px;
+            padding: 3px;
+
+
+        }
