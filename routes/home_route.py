@@ -17,6 +17,10 @@ def keyword_search():
     keyword = request.args.get('keyword')
     print(keyword)
     found_articles = list(db.articles.find({'$or': [{'album_singer':{'$regex': keyword}}, {'album_title':{'$regex': keyword}}]},{}))
+    for article in found_articles:
+        print(article['_id'])
+
+    # comments = db.comments.find({'article_id':})
     return jsonify({'found_articles': found_articles})
     # return render_template('templates/index.html', results = found_articles)
 

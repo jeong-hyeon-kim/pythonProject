@@ -57,7 +57,7 @@
         // });
 
 
-            function like(article_id) {
+        function like(article_id) {
             $.ajax({
                 type: 'POST',
                 url: '/api/home/like',
@@ -100,6 +100,8 @@
                             let like = articles[i]['like']
                             let date = articles[i]['post_date']
                             let desc = articles[i]['article_description']
+                            let comment1 = articles[i]['comment1']
+                            let comment2 = articles[i]['comment2']
 
                             let temp_html = `<div class="card" style="width: 18rem;">
                                             <img class="card-img-top"
@@ -122,13 +124,13 @@
                                                     <div class="comment-box comment-box1">
                                                         <img class="commenter-img"
                                                              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                                                        <span class="writer-name">댓글1준비중</span>
+                                                        <span class="writer-name">${comment1}</span>
                                                     </div>
 
                                                     <div class="comment-box comment-box2">
                                                         <img class="commenter-img"
                                                              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                                                        <span class="writer-name">댓글2준비중</span>
+                                                        <span class="writer-name">${comment2}</span>
                                                     </div>
                                                 </div>
                                                 <div class="buttons-box">
@@ -210,19 +212,32 @@
                 <div class="comments-wrap">
                     <p>댓글</p>
                     <div class="comment-box comment-box1">
+                        {% if result['comment1'] %}
                         <img class="commenter-img"
                              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">댓글1준비중</span>
+                        {% else %}
+                        <img class="commenter-img"
+                             src="https://mblogthumb-phinf.pstatic.net/MjAxNzEyMThfMjQ1/MDAxNTEzNjA3MTcwNTg4.f9D3x971p8iDr_ox3nOQZmp2bHHA3YEtAvWI6-Zq6aAg.1E7HSp02TKDPZwC1wdciQdKiMEEzo0TvuY0ts5OmK4Mg.PNG.ooza-/IMG_9198.PNG?type=w800">
+                        {% endif %}
+
+                        <span class="writer-name">{{result['comment1']}}</span>
                     </div>
 
                     <div class="comment-box comment-box2">
+                        {% if result['comment2'] %}
                         <img class="commenter-img"
                              src="https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20211227_62%2F1640615471329w8jX4_JPEG%2F41751250936821328_900893847.jpg&type=sc960_832">
-                        <span class="writer-name">댓글2준비중</span>
+                        {% else %}
+                        <img class="commenter-img"
+                             src="https://mblogthumb-phinf.pstatic.net/MjAxNzEyMThfMjQ1/MDAxNTEzNjA3MTcwNTg4.f9D3x971p8iDr_ox3nOQZmp2bHHA3YEtAvWI6-Zq6aAg.1E7HSp02TKDPZwC1wdciQdKiMEEzo0TvuY0ts5OmK4Mg.PNG.ooza-/IMG_9198.PNG?type=w800">
+                        {% endif %}
+
+                        <span class="writer-name">{{result['comment2']}}</span>
                     </div>
                 </div>
                 <div class="buttons-box">
-                    <a href="#" onclick=like("{{result['_id']}}") style="cursor: pointer" class="card-footer-item has-text-info like-btn">
+                    <a href="#" onclick=like("{{result['_id']}}") style="cursor: pointer"
+                       class="card-footer-item has-text-info like-btn">
                         <i class="fas fa-heart"></i>
                         <span class="like-counts">{{result['like']}}</span>
                     </a>
