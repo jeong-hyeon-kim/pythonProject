@@ -137,7 +137,15 @@ a {
 .card .description {
     background-color: #dce3f9;
     border-radius: 20px;
-    padding: 20px;
+    padding:15px;
+    width: 245px;
+    height: 60px;
+    /*-webkit-line-clamp: 2;*/
+    -webkit-box-orient: vertical;
+    white-space : nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 .card .date {
@@ -159,6 +167,22 @@ a {
     width: 30px;
     height: 30px;
     border-radius: 15px;
+    display: inline-block;
+}
+
+.comments-wrap {
+    height: 107px;
+}
+
+.comment-text {
+    font-size: 14px;
+    font-weight: lighter;
+
+    /*!*-webkit-line-clamp: 2;*!*/
+    /*-webkit-box-orient: vertical;*/
+    /*white-space : nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
 }
 
 .card .buttons-box {

@@ -102,14 +102,17 @@
                                                     <p>댓글</p>
                                                     <div class="comment-box comment-box1">
                                                         <img class="commenter-img"
-                                                             src="${commenter1_img}">
-                                                        <span class="writer-name">${comment1}</span>
+                                                             src="${commenter1_img}"
+                                                             onerror="this.src='https://mblogthumb-phinf.pstatic.net/MjAxNzEyMThfMjQ1/MDAxNTEzNjA3MTcwNTg4.f9D3x971p8iDr_ox3nOQZmp2bHHA3YEtAvWI6-Zq6aAg.1E7HSp02TKDPZwC1wdciQdKiMEEzo0TvuY0ts5OmK4Mg.PNG.ooza-/IMG_9198.PNG?type=w800'">
+                                                        <span class="comment-text">${comment1}</span>
                                                     </div>
 
                                                     <div class="comment-box comment-box2">
                                                         <img class="commenter-img"
-                                                             src="${commenter2_img}" alt="">
-                                                        <span class="writer-name">${comment2}</span>
+                                                             src="${commenter2_img}"
+                                                             onerror="this.src='https://mblogthumb-phinf.pstatic.net/MjAxNzEyMThfMjQ1/MDAxNTEzNjA3MTcwNTg4.f9D3x971p8iDr_ox3nOQZmp2bHHA3YEtAvWI6-Zq6aAg.1E7HSp02TKDPZwC1wdciQdKiMEEzo0TvuY0ts5OmK4Mg.PNG.ooza-/IMG_9198.PNG?type=w800'"
+                                                             >
+                                                        <span class="comment-text">${comment2}</span>
                                                     </div>
                                                 </div>
                                                 <div class="buttons-box">
@@ -183,7 +186,7 @@
                 <div class="writer-box">
                     <img class="writer-img"
                          src="{{ result['writer_img'] }}">
-                    <span class="writer-name">{{result['writer_name']}}</span>
+                    <span class="comment-text">{{result['writer_name']}}</span>
                 </div>
                 <div class="description">{{ result['article_description'] }}</div>
                 <div class="date">{{result['post_date']}}</div>
@@ -199,7 +202,7 @@
                              src="https://mblogthumb-phinf.pstatic.net/MjAxNzEyMThfMjQ1/MDAxNTEzNjA3MTcwNTg4.f9D3x971p8iDr_ox3nOQZmp2bHHA3YEtAvWI6-Zq6aAg.1E7HSp02TKDPZwC1wdciQdKiMEEzo0TvuY0ts5OmK4Mg.PNG.ooza-/IMG_9198.PNG?type=w800">
                         {% endif %}
 
-                        <span class="writer-name">{{result['comment1']}}</span>
+                        <span class="comment-text">{{result['comment1']}}</span>
                     </div>
 
                     <div class="comment-box comment-box2">
@@ -211,7 +214,7 @@
                              src="https://mblogthumb-phinf.pstatic.net/MjAxNzEyMThfMjQ1/MDAxNTEzNjA3MTcwNTg4.f9D3x971p8iDr_ox3nOQZmp2bHHA3YEtAvWI6-Zq6aAg.1E7HSp02TKDPZwC1wdciQdKiMEEzo0TvuY0ts5OmK4Mg.PNG.ooza-/IMG_9198.PNG?type=w800">
                         {% endif %}
 
-                        <span class="writer-name">{{result['comment2']}}</span>
+                        <span class="comment-text">{{result['comment2']}}</span>
                     </div>
                 </div>
                 <div class="buttons-box">
